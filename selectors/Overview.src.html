@@ -528,8 +528,8 @@ Selectors Overview</h2>
       <td><a href="#idref-combinators">Reference combinator</a>
       <td>4
     <tr>
-      <td><code>!E > F</code>
-      <td>an E element parent of an F element
+      <td><code>E:has(F)</code>
+      <td>an E element ancestor of an F element
       <td><a href="#subject">Determining the subject of a selector</a> +
           <a href="#child-combinators">Child combinator</a>
       <td>4
@@ -579,7 +579,7 @@ Selectors Overview</h2>
         <li><i>Combinators</i> within <code>:matches()</code>, <code>:not()</code>, <code>:nth-match()</code>, and <code>:nth-last-match()</code>.
           <p class='issue'>We are considering whether this restriction should be lifted.
         <li>The <a href="#idref-combinators">reference combinator</a>
-        <li>The <a href="#subject">subject indicator</a>
+        <li>The <a href="#subject">:has() pseudo-class</a>
       </ul>
 
     <dt><dfn id='complete-profile'>complete</dfn>
@@ -726,15 +726,11 @@ Determining the Subject of a Selector</h3>
 
   <p>As a feature of the <i>complete</i> Selectors profile,
   the subject of the selector can be explicitly identified
-  by prepending an exclamation mark (!)
+  by using the <code>:has()</code> pseudo-class
   to one of the <i>compound selectors</i> in a selector.
   Although the element structure that the selector represents is the same
-  with or without the exclamation mark, indicating the subject in this way
+  with or without the pseudo-class, indicating the subject in this way
   can change which <i>compound selector</i> represents the subject in that structure.
-
-  <p class="issue">
-    Should the exclamation mark be prepended or appended to the subject? Or both?
-    Or prepend two, to avoid the "! = not" issue?
 
   <div class="example">
   <p>For example, the following selector represents a list item <code>LI</code>
@@ -742,20 +738,12 @@ Determining the Subject of a Selector</h3>
     <pre>OL > LI:only-child</pre>
     <p>However the following one represents an ordered list <code>OL</code>
     having a unique child, that child being a <code>LI</code>:
-    <pre>!OL > LI:only-child</pre>
+    <pre>OL:has( > LI:only-child )</pre>
     <p>The tree structures represented by these two selectors are the same,
     but the subjects of the selectors are not.
   </div>
 
-  <p>If multiple subject indicators are present in a selector, the subjects
-  of the selectors are the elements represented by all <i>compound selectors</i>
-  prepended by a subject indicator.</p>
 
-  <div class="example">
-    <p>For example, the following selectors represents all paragraphs of class
-      <code>warning</code> contained in a div AND their containing <code>div</code> elements:</p>
-    <pre>!div > !p.warning</pre>
-  </div>
 
 <h3 id="scoping">
 Scoped Selectors</h3>
